@@ -16,7 +16,7 @@ Progress
 
 1. Done, looks ok;
 2. Done, some fiddling of node versions, etc. Best to proceed by installing nvm first.
-3. In progress: problem with not having utf-8 in our ISA-Tab files.
+3. In progress: Fixed the UTF-8 problem by editing the Investigation file myself. Now we have a problem with optional columns in the study file that are required by the isa-explorer `build_index.py` script. Which I am fixing by editing that script.
 4. 2 days? Can we use a static S3 site?
 5. 2 days?
 
