@@ -1,0 +1,39 @@
+#!/bin/sh
+
+set -e -u
+
+if [ -z "${1-}" ]
+then
+   printf 1>&2 "An argument is required. Usage:\nprepare-tab file\n"
+   exit 99
+fi
+
+F=$1
+
+B=$(basename "$F" .zip)
+D=unzip/"$B"
+
+mkdir -p "$D"
+unzip -o "$F" -d "$D"
+
+cd "$D"
+
+# Remove ^M
+for f in i_*.txt s_*.txt a_*.txt
+do
+    printf ',s/
+//g
+w
+q
+' | ed -s "$f"
+done
+
+# Rename i_* file to i_Investigation.txt
+i_files=$(ls -d i_*.txt | wc -l)
+if [ "$i_files" != 1 ]
+then
+  printf 1>&2 "There should be exactly one i_*.txt file::\n%s\n" "$(ls -d i_*.txt)"
+  exit 4
+fi
+
+mv i_*.txt i_Investigation.txt
